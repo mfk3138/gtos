@@ -118,6 +118,7 @@ dmypy.json
 /literature/
 generator/check/
 generator/meteor-1.5/*
+generator_data/data/
 translator/check/
 *.ipynb
 *.pdf

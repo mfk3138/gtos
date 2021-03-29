@@ -85,6 +85,6 @@ class AdamWeightDecayOptimizer(Optimizer):
                 # Instead we want ot decay the weights in a manner that doesn't interact
                 # with the m/v parameters. This is equivalent to adding the square
                 # of the weights to the loss with plain (non-momentum) SGD.
-                update = (exp_avg/denom).add_(group['weight_decay'], p.data)
-                p.data.add_(-group['lr'], update)
+                update = (exp_avg/denom).add_(p.data, alpha=group['weight_decay'])
+                p.data.add_(update, alpha=-group['lr'])
         return loss

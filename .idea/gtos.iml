@@ -5,7 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/generator" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/translator" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Remote Python 3.8.3 (sftp://mafukun@192.168.3.203:22/home/mafukun/anaconda3/bin/python)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Remote Python 3.7.10 (sftp://mafukun@192.168.3.203:22/home/mafukun/.conda/envs/gtog/bin/python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

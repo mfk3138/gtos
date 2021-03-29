@@ -135,7 +135,7 @@ class RelationMultiheadAttention(nn.Module):
 
         if attn_mask is not None:
             attn_weights.masked_fill_(
-                attn_mask.unsqueeze(-1),
+                attn_mask.unsqueeze(-1).bool(),
                 float('-inf')
             )
 
@@ -143,7 +143,7 @@ class RelationMultiheadAttention(nn.Module):
             # don't attend to padding symbols
             attn_weights = attn_weights.view(tgt_len, src_len, bsz, self.num_heads)
             attn_weights.masked_fill_(
-                key_padding_mask.unsqueeze(0).unsqueeze(-1),
+                key_padding_mask.unsqueeze(0).unsqueeze(-1).bool(),
                 float('-inf')
             )
             attn_weights = attn_weights.view(tgt_len, src_len, bsz * self.num_heads)

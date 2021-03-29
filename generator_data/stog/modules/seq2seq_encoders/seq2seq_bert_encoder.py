@@ -40,7 +40,7 @@ class Seq2SeqBertEncoder(BertModel):
         token_reprs = expanded_encoded_layers[batch_index, token_index, token_subword_index]
         subword_pad_mask = token_subword_index.eq(0).unsqueeze(3).expand(
             batch_size, num_tokens, num_subwords, hidden_size)
-        token_reprs.masked_fill_(subword_pad_mask, 0)
+        token_reprs.masked_fill_(subword_pad_mask.bool(), 0)
         # [batch_size, num_tokens, hidden_size]
         sum_token_reprs = torch.sum(token_reprs, dim=2)
         # [batch_size, num_tokens]
@@ -63,7 +63,7 @@ class Seq2SeqBertEncoder(BertModel):
         token_reprs = expanded_encoded_layers[batch_index, token_index, token_subword_index]
         subword_pad_mask = token_subword_index.eq(0).unsqueeze(3).expand(
             batch_size, num_tokens, num_subwords, hidden_size)
-        token_reprs.masked_fill_(subword_pad_mask, -float('inf'))
+        token_reprs.masked_fill_(subword_pad_mask.bool(), -float('inf'))
         # [batch_size, num_tokens, hidden_size]
         max_token_reprs, _ = torch.max(token_reprs, dim=2)
         # [batch_size, num_tokens]

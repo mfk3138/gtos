@@ -255,7 +255,7 @@ class STOG(Model):
         coref_happen_mask = raw_coref_inputs.ne(0)
         decoder_coref_inputs = torch.ones_like(raw_coref_inputs) * torch.arange(
             0, raw_coref_inputs.size(1)).type_as(raw_coref_inputs).unsqueeze(0)
-        decoder_coref_inputs.masked_fill_(coref_happen_mask, 0)
+        decoder_coref_inputs.masked_fill_(coref_happen_mask.bool(), 0)
         # [batch, num_tokens]
         decoder_coref_inputs = decoder_coref_inputs + raw_coref_inputs
 
@@ -1107,7 +1107,7 @@ class STOG(Model):
         coref_index = (predictions - vocab_size - copy_vocab_size)
         # Fill the place where copy didn't happen with the current step,
         # which means that the node doesn't refer to any precedent, it refers to itself.
-        coref_index.masked_fill_(1 - coref_mask, step + 1)
+        coref_index.masked_fill_((1 - coref_mask).bool(), step + 1)
 
         coref_attention_maps[batch_index, step_index, coref_index] = 1
 

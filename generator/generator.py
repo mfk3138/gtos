@@ -76,7 +76,7 @@ class Generator(nn.Module):
         relation = self.relation_encoder(inp['relation_bank'], inp['relation_length'])
 
         if train:
-            relation = relation.index_select(0, inp['relation'].view(-1)).view(*inp['relation'].size(), -1)
+            relation = relation.index_select(0, inp['relation'].contiguous().view(-1)).view(*inp['relation'].contiguous().size(), -1)
         else:
             #pick = inp['relation'][:,:,:,0]
             #relation = relation.index_select(0, pick.view(-1)).view(*pick.size(), -1)

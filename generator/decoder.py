@@ -61,7 +61,7 @@ class TokenGenerator(nn.Module):
 
         token_loss = -ll.gather(dim=-1, index=target.unsqueeze(-1)).squeeze(-1)
         token_mask = torch.eq(target, self.vocabs['predictable_token'].padding_idx)
-        token_loss = token_loss.masked_fill_(token_mask, 0.).sum(0)
+        token_loss = token_loss.masked_fill_(token_mask.bool(), 0.).sum(0)
         return token_loss
 
 class DecodeLayer(nn.Module):

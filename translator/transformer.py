@@ -133,7 +133,7 @@ class MultiheadAttention(nn.Module):
 
         if attn_mask is not None:
             attn_weights.masked_fill_(
-                attn_mask.unsqueeze(0),
+                attn_mask.unsqueeze(0).bool(),
                 float('-inf')
             )
 
@@ -141,7 +141,7 @@ class MultiheadAttention(nn.Module):
             # don't attend to padding symbols
             attn_weights = attn_weights.view(bsz, self.num_heads, tgt_len, src_len)
             attn_weights.masked_fill_(
-                key_padding_mask.transpose(0, 1).unsqueeze(1).unsqueeze(2),
+                key_padding_mask.transpose(0, 1).unsqueeze(1).unsqueeze(2).bool(),
                 float('-inf')
             )
             attn_weights = attn_weights.view(bsz * self.num_heads, tgt_len, src_len)
